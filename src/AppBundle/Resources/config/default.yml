@@ -1,0 +1,10 @@
+
+app_login:
+    path: /login
+    defaults: { _controller: AppBundle:Default:login }
+
+
+app_lineas:
+    path: /lineas
+    defaults: { _controller: AppBundle:Default:index }
+

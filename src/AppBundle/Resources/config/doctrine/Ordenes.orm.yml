@@ -1,0 +1,27 @@
+AppBundle\Entity\Ordenes:
+    repositoryClass: AppBundle\Entity\OrdenesRepository
+    type: entity
+    table: ordenes
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        usuarioId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: usuario_id
+        creadoEn:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: creado_en
+    lifecycleCallbacks: {  }

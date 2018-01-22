@@ -1,0 +1,11 @@
+app_default:
+    resource: "@AppBundle/Resources/config/default.yml"
+    prefix:   /
+
+app_pedidos:
+    resource: "@AppBundle/Resources/config/pedidos.yml"
+    prefix:   /pedidos
+    
+    
+
+

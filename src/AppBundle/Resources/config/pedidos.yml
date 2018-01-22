@@ -1,0 +1,6 @@
+
+app_realizar_orden:
+    path: /realizar_orden
+    defaults: { _controller: AppBundle:Pedidos:realizar_orden }
+
+

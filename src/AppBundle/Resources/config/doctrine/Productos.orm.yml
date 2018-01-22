@@ -1,0 +1,52 @@
+AppBundle\Entity\Productos:
+    repositoryClass: AppBundle\Entity\ProductosRepository
+    type: entity
+    table: productos
+    id:
+        codigo:
+            type: string
+            nullable: false
+            length: 15
+            options:
+                fixed: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        producto:
+            type: string
+            nullable: false
+            length: 70
+            options:
+                fixed: false
+        linea:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+        lineaId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: linea_id
+        proveedor:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+        descripcion:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+        precioCompra:
+            type: decimal
+            nullable: false
+            precision: 10
+            scale: 2
+            column: precio_compra
+    lifecycleCallbacks: {  }
