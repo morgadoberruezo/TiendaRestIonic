@@ -80,4 +80,33 @@ class Ordenes
     {
         return $this->creadoEn;
     }
+    /**
+     * @var \AppBundle\Entity\Login
+     */
+    private $usuario;
+
+
+    /**
+     * Set usuario
+     *
+     * @param \AppBundle\Entity\Login $usuario
+     *
+     * @return Ordenes
+     */
+    public function setUsuario(\AppBundle\Entity\Login $usuario = null)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \AppBundle\Entity\Login
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
 }

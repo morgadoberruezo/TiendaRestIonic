@@ -196,4 +196,33 @@ class Productos
     {
         return $this->precioCompra;
     }
+    /**
+     * @var \AppBundle\Entity\Lineas
+     */
+    private $linea2;
+
+
+    /**
+     * Set linea2
+     *
+     * @param \AppBundle\Entity\Lineas $linea2
+     *
+     * @return Productos
+     */
+    public function setLinea2(\AppBundle\Entity\Lineas $linea2 = null)
+    {
+        $this->linea2 = $linea2;
+
+        return $this;
+    }
+
+    /**
+     * Get linea2
+     *
+     * @return \AppBundle\Entity\Lineas
+     */
+    public function getLinea2()
+    {
+        return $this->linea2;
+    }
 }

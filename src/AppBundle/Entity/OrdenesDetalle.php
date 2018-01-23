@@ -80,4 +80,62 @@ class OrdenesDetalle
     {
         return $this->productoId;
     }
+    /**
+     * @var \AppBundle\Entity\Productos
+     */
+    private $producto;
+
+    /**
+     * @var \AppBundle\Entity\Ordenes
+     */
+    private $orden;
+
+
+    /**
+     * Set producto
+     *
+     * @param \AppBundle\Entity\Productos $producto
+     *
+     * @return OrdenesDetalle
+     */
+    public function setProducto(\AppBundle\Entity\Productos $producto = null)
+    {
+        $this->producto = $producto;
+
+        return $this;
+    }
+
+    /**
+     * Get producto
+     *
+     * @return \AppBundle\Entity\Productos
+     */
+    public function getProducto()
+    {
+        return $this->producto;
+    }
+
+    /**
+     * Set orden
+     *
+     * @param \AppBundle\Entity\Ordenes $orden
+     *
+     * @return OrdenesDetalle
+     */
+    public function setOrden(\AppBundle\Entity\Ordenes $orden = null)
+    {
+        $this->orden = $orden;
+
+        return $this;
+    }
+
+    /**
+     * Get orden
+     *
+     * @return \AppBundle\Entity\Ordenes
+     */
+    public function getOrden()
+    {
+        return $this->orden;
+    }
 }

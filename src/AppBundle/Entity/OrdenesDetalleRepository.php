@@ -10,4 +10,19 @@ namespace AppBundle\Entity;
  */
 class OrdenesDetalleRepository extends \Doctrine\ORM\EntityRepository
 {
+     //obtenemos los productos, con su info , de una orden
+       public function getProductos($orden) {
+        $em = $this->getEntityManager();
+        $dql = 'Select od, p
+                from AppBundle:Ordenesdetalle od
+                join od.producto p
+                where od.orden = :orden
+               ';
+
+
+        $query = $em->createQuery($dql)
+                    ->setParameter('orden', $orden);
+        $productos = $query->getArrayResult();
+        return $productos;
+       }
 }

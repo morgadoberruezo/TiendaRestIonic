@@ -10,4 +10,16 @@ namespace AppBundle\Entity;
  */
 class OrdenesRepository extends \Doctrine\ORM\EntityRepository
 {
+  //obtenemos las ordenes de un usuario
+  public function getOrdenes($usuario) {
+   $em = $this->getEntityManager();
+   $dql = 'Select o.id
+           from AppBundle:Ordenes o
+           where o.usuario = :usuario
+          ';
+   $query = $em->createQuery($dql)
+               ->setParameter('usuario', $usuario);
+   $ordenes = $query->getArrayResult();
+   return $ordenes;
+  }
 }

@@ -2,6 +2,10 @@ AppBundle\Entity\Productos:
     repositoryClass: AppBundle\Entity\ProductosRepository
     type: entity
     table: productos
+    indexes:
+        lineaFK:
+            columns:
+                - linea_id
     id:
         codigo:
             type: string
@@ -25,12 +29,6 @@ AppBundle\Entity\Productos:
             length: 50
             options:
                 fixed: false
-        lineaId:
-            type: integer
-            nullable: false
-            options:
-                unsigned: false
-            column: linea_id
         proveedor:
             type: string
             nullable: false
@@ -49,4 +47,15 @@ AppBundle\Entity\Productos:
             precision: 10
             scale: 2
             column: precio_compra
+    manyToOne:
+        linea2:
+            targetEntity: Lineas
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                linea_id:
+                    referencedColumnName: id
+            orphanRemoval: false
     lifecycleCallbacks: {  }

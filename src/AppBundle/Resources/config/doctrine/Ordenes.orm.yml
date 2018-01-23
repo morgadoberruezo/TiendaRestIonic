@@ -2,6 +2,10 @@ AppBundle\Entity\Ordenes:
     repositoryClass: AppBundle\Entity\OrdenesRepository
     type: entity
     table: ordenes
+    indexes:
+        ordenes_usuarioFK:
+            columns:
+                - usuario_id
     id:
         id:
             type: integer
@@ -12,16 +16,21 @@ AppBundle\Entity\Ordenes:
             generator:
                 strategy: IDENTITY
     fields:
-        usuarioId:
-            type: integer
-            nullable: false
-            options:
-                unsigned: false
-            column: usuario_id
         creadoEn:
             type: datetime
             nullable: false
             options:
                 default: CURRENT_TIMESTAMP
             column: creado_en
+    manyToOne:
+        usuario:
+            targetEntity: Login
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
     lifecycleCallbacks: {  }
