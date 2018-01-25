@@ -5,6 +5,5 @@ app_login:
 
 
 app_lineas:
-    path: /lineas
+    path: /categorias
     defaults: { _controller: AppBundle:Default:index }
-

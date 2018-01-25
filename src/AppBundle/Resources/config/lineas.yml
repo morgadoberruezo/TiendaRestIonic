@@ -1,0 +1,6 @@
+
+
+
+app_categorias:
+    path: /listar
+    defaults: { _controller: AppBundle:Lineas:listar }

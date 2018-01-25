@@ -5,7 +5,11 @@ app_default:
 app_pedidos:
     resource: "@AppBundle/Resources/config/pedidos.yml"
     prefix:   /pedidos
-    
-    
 
+app_productos:
+    resource: "@AppBundle/Resources/config/productos.yml"
+    prefix:   /productos
 
+app_lineas:
+    resource: "@AppBundle/Resources/config/lineas.yml"
+    prefix:   /categorias

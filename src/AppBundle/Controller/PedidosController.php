@@ -13,13 +13,15 @@ use AppBundle\Entity\OrdenesDetalle;
 class PedidosController extends Controller
 {
     public function obtener_pedidosAction(Request $request){
+
         $helpers = $this->get("app.helpers");
         $jwt_auth = $this->get("app.jwt_auth");
 
         $data_json = $request->get('data', null);
+
         if ($data_json != null){
             $params = json_decode($data_json);
-            $idUsu = (isset($params->id) ? $params->id : null);
+            $idUsu = (isset($params->id) ? $params->id : 1);
             $getHash = (isset($params->getHash) ? $params->getHash : null);
             if ($getHash == null || $idUsu == null){
                 $respuesta = array(
@@ -30,6 +32,9 @@ class PedidosController extends Controller
                 return;
             }
         }
+
+          $idUsu = 1;
+/*
         //comprobamos el token
         $check =  $jwt_auth->checkToken($getHash, false);
         if ($check == false){
@@ -40,6 +45,7 @@ class PedidosController extends Controller
             );
             return;
         }
+    */
         //el token es válido
         //devolver ordenes del usuario
         $em = $this->getDoctrine()->getManager();
@@ -51,7 +57,7 @@ class PedidosController extends Controller
        //en detalle_productos
         $resultado = array();
         foreach ($ordenes as $orden) {
-          echo($orden["id"]). '<br>';
+        //  echo($orden["id"]). '<br>';
           $detalle_productos = $this->getDoctrine()
                   ->getRepository('AppBundle:OrdenesDetalle')
                   ->getProductos($orden["id"]);

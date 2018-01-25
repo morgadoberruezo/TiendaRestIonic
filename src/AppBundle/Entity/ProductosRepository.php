@@ -10,39 +10,18 @@ namespace AppBundle\Entity;
  */
 class ProductosRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function verProducto($codigo) {
-        $em = $this->getEntityManager();
-        $dql = 'Select p, g
-                from BDBundle:Producto p
-                join p.gama g
-                where p.codigoproducto = :codigo
-                
-               ';
-        $query = $em->createQuery($dql)
-                    ->setParameter('codigo', $codigo);
-        $producto = $query->getSingleResult();
-        return $producto;
-    }
-    
-    public function getProductos() {
-        $em = $this->getEntityManager();
-        $dql = 'Select p
-                from BDBundle:Producto p
-               ';
-        $query = $em->createQuery($dql);
-        $productos= $query->getArrayResult();
-        return $productos;
-    }
-    public function getProductosGama($gama) {
-        $em = $this->getEntityManager();
-        $dql = 'Select p
-                from BDBundle:Producto p
-                join p.gama g
-                where g.gama = :gama
-               ';
-        $query = $em->createQuery($dql)
-                ->setParameter('gama', $gama);
-        //$productos= $query->getArrayResult();
-        return $query;
-    }
+   public function getProductosPage($pagina){
+     $em = $this->getEntityManager();
+     $dql = 'Select p
+             from AppBundle:Productos p
+            ';
+     $query = $em->createQuery($dql)
+              ->setFirstResult($pagina)
+              ->setMaxResults(10);
+
+     $productos= $query->getArrayResult();
+     return $productos;
+   }
+
+
 }
