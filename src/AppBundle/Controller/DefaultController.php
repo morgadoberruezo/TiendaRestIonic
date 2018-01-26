@@ -15,12 +15,14 @@ class DefaultController extends Controller
         $helpers = $this->get("app.helpers");
         $jwt_auth = $this->get("app.jwt_auth");
         $data_json = $request->get('data', null);
+
         if ($data_json != null){
 
             $params = json_decode($data_json);
             $email = (isset($params->correo) ? $params->correo : null);
             $pass = (isset($params->contrasena) ? $params->contrasena : null);
             $getHash = (isset($params->getHash) ? $params->getHash : null);
+
             //creamos un aserto para validar el email
             $emailConstraint = new Assert\Email();
             $emailConstraint->message = "email no es válido";
@@ -37,9 +39,20 @@ class DefaultController extends Controller
                     $signup = $jwt_auth->signup($email, $pass);
                 else
                    // $signup = $jwt_auth->signup($email, $pwd, true);
-                    $signup = $jwt_auth->signup($email, $pass, true);
-                return new JsonResponse($signup);
+                    $token = $jwt_auth->signup($email, $pass, true);
+                    $datosUsu = $jwt_auth->signup($email, $pass);
+                    if (isset($token['status']))
+                      $resultado = $token;
+                    else {
+                        $resultado = array (
+                          'status' => 'success',
+                          'token' => $token,
+                          'usuario' => $datosUsu
+                          ) ;
+                    }
+                return new JsonResponse($resultado);
             }else{
+
                 return $helpers->a_json(array(
                     "status" => "error",
                     "data" => "Login not valid !!"
@@ -59,7 +72,7 @@ class DefaultController extends Controller
         $lineas = $this->getDoctrine()
                 ->getRepository('AppBundle:OrdenesDetalle')
                 ->getProductos(3);
-        
+
 
         $helpers = $this->get("app.helpers");
 
