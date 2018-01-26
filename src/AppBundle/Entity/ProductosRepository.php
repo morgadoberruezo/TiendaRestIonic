@@ -10,6 +10,20 @@ namespace AppBundle\Entity;
  */
 class ProductosRepository extends \Doctrine\ORM\EntityRepository
 {
+   public function getProductosCategoria($linea, $pagina) {
+     $em = $this->getEntityManager();
+     $dql = 'Select p
+             from AppBundle:Productos p
+             join p.linea2 l
+             where l.id = :linea
+            ';
+      $query = $em->createQuery($dql)
+               ->setParameter('linea', $linea)
+               ->setFirstResult($pagina)
+               ->setMaxResults(10);
+      $productos= $query->getArrayResult();
+      return $productos;
+   }
    public function getProductosPage($pagina){
      $em = $this->getEntityManager();
      $dql = 'Select p

@@ -17,9 +17,12 @@ class LineasController extends Controller
             ->getRepository('AppBundle:Lineas')
             ->getLineas();
 
-
+    $resultado = array(
+      'error' => 'false',
+      'categorias' => $categorias
+    );
     $helpers = $this->get("app.helpers");
 
-    return $helpers->a_json($categorias);
+    return $helpers->a_json($resultado);
   }
 }
