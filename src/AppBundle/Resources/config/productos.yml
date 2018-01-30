@@ -1,9 +1,6 @@
 
-app_realizar_orden:
-    path: /realizar_orden
-    defaults: { _controller: AppBundle:Pedidos:realizar_orden }
 
-app_obtener_pedidos:
+app_obtener_productos:
     path: /obtener_productos_page
     defaults: { _controller: AppBundle:Productos:obtener_productos }
 

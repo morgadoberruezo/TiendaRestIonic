@@ -1,9 +1,12 @@
 
 app_realizar_orden:
-    path: /realizar_orden
-    defaults: { _controller: AppBundle:Pedidos:realizar_orden }
+    path: /realizarOrden
+    defaults: { _controller: AppBundle:Pedidos:realizarOrden }
 
 app_obtener_pedidos:
     path: /obtener_pedidos
     defaults: { _controller: AppBundle:Pedidos:obtener_pedidos }
 
+app_borrar_orden:
+    path: /borrar_orden
+    defaults: { _controller: AppBundle:Pedidos:borrar_orden }

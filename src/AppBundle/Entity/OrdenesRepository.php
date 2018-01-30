@@ -22,4 +22,38 @@ class OrdenesRepository extends \Doctrine\ORM\EntityRepository
    $ordenes = $query->getArrayResult();
    return $ordenes;
   }
+
+  public function getOrdenUsuario($idUsu,$orden) {
+   $em = $this->getEntityManager();
+   $dql = 'Select o.id, u.id
+           from AppBundle:Ordenes o
+           join o.usuario u
+           where (o.id = :orden) and (u.id = :userId)
+          ';
+   $query = $em->createQuery($dql)
+               ->setParameters(array('orden' => $orden, 'userId' => $idUsu));
+   $orden = $query->getArrayResult();
+   return $orden;
+  }
+
+  public function borrar_pedido ($orden){
+    $em = $this->getEntityManager();
+    $dql = 'delete
+            from AppBundle:OrdenesDetalle od
+            where (od.orden = :orden)
+           ';
+    $query = $em->createQuery($dql)
+                ->setParameter('orden', $orden);
+    $ordenD = $query->getArrayResult();
+
+    $dql = 'delete
+            from AppBundle:Ordenes o
+            where (o.id = :orden)
+           ';
+    $query = $em->createQuery($dql)
+                ->setParameter('orden', $orden);
+    $orden = $query->getArrayResult();
+
+    return $ordenD;
+  }
 }

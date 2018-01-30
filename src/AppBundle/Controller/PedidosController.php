@@ -12,13 +12,95 @@ use AppBundle\Entity\OrdenesDetalle;
 
 class PedidosController extends Controller
 {
+    public function validarInicial($params){
+      $helpers = $this->get("app.helpers");
+      $jwt_auth = $this->get("app.jwt_auth");
+
+      $idUsu = (isset($params->id) ? $params->id : 1);
+      $getHash = (isset($params->getHash) ? $params->getHash : null);
+      if ($getHash == null || $idUsu == null){
+        $respuesta = array(
+            "status" => "error",
+            "code"  => 400,
+            "msg" => "token y/o usuario inválido"
+        );
+      } else {
+            //comprobamos el tokenu
+            $check =  $jwt_auth->checkToken($getHash, false);
+            if ($check == false){
+                $respuesta = array(
+                        "status" => "error",
+                        "code"  => 400,
+                        "msg" => "token incorrecto"
+                );
+            }else {
+               $respuesta = array(
+                      "status" => "success",
+                      "code"  => 200,
+                      "msg" => "ususario y token correcto"
+              );
+            }
+          }
+
+
+      return $respuesta;
+      }
+
+
+    public function borrar_ordenAction(Request $request){
+        $data_json = $request->get('data', null);
+        $helpers = $this->get("app.helpers");
+
+
+        if ($data_json != null){
+            $params = json_decode($data_json);
+            $respuesta =  $this->validarInicial($params);
+
+        }
+
+        if ($respuesta['status'] == 'success'){
+          //comprobar orden
+          $idUsu = (isset($params->id) ? $params->id : null);
+          $ordenId = (isset($params->ordenId) ? $params->ordenId : null);
+          //consulta por orden e idus y borramos y delvolver respuesta
+          //verificamossi la orden es de ese usuario_id
+          $em = $this->getDoctrine()->getManager();
+          $orden = $em->getRepository("AppBundle:Ordenes")
+                      ->getOrdenUsuario($idUsu, $ordenId);
+          if (count($orden) > 0){
+            //la orden es del usuario --> podemos borrar
+            $em = $this->getDoctrine()->getManager();
+            $total = $em->getRepository("AppBundle:Ordenes")
+                        ->borrar_pedido($ordenId);
+
+            $respuesta = array(
+              "status" => "success",
+              "code"  => 200,
+              "msg" => "Se borraron $total productos de la orden $ordenId del usuario $idUsu"
+            );
+          }else {
+            //lo orden no es de ese usuario. No exste la dupla (idUsu, ordenId) en Ordenes
+            $respuesta = array(
+              "status" => "error",
+              "code"  => 400,
+              "msg" => "La orden $ordenId no corresponde al usuario $idUsu"
+            );
+          }
+        }else {
+          //devolver respuesta erronea
+
+        }
+
+        return  $helpers->a_json($respuesta);
+
+
+    }
     public function obtener_pedidosAction(Request $request){
 
         $helpers = $this->get("app.helpers");
         $jwt_auth = $this->get("app.jwt_auth");
 
         $data_json = $request->get('data', null);
-
         if ($data_json != null){
             $params = json_decode($data_json);
             $idUsu = (isset($params->id) ? $params->id : 1);
@@ -33,8 +115,6 @@ class PedidosController extends Controller
             }
         }
 
-          $idUsu = 1;
-/*
         //comprobamos el token
         $check =  $jwt_auth->checkToken($getHash, false);
         if ($check == false){
@@ -45,7 +125,7 @@ class PedidosController extends Controller
             );
             return;
         }
-    */
+
         //el token es válido
         //devolver ordenes del usuario
         $em = $this->getDoctrine()->getManager();
@@ -73,7 +153,11 @@ class PedidosController extends Controller
         //devolvemos el resultado en json
         return  $helpers->a_json($resultado);
     }
-    public function realizar_ordenAction(Request $request){
+
+
+    public function realizarOrdenAction(Request $request){
+
+
         $helpers = $this->get("app.helpers");
         $jwt_auth = $this->get("app.jwt_auth");
 
@@ -114,7 +198,7 @@ class PedidosController extends Controller
         //inserto la orden en la TABLA ORDENES (usuario_id, creado_en)
         $em = $this->getDoctrine()->getManager();
         $usuario = $em->getRepository("AppBundle:Login")->findOneBy(array("id" =>$idUsu));
-        var_dump($usuario);
+      //  var_dump($usuario);
         $orden = new Ordenes();
         $orden->setUsuario($usuario);
         $orden->setCreadoEn(new \DateTime("now"));
@@ -142,7 +226,9 @@ class PedidosController extends Controller
                     "msg" => "orden: " . $orden_id
             );
         return  $helpers->a_json($respuesta);
+
     }
+
 
 
 }
